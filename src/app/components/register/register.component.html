@@ -1,0 +1,82 @@
+<div [hidden]="submitted">
+  <div class="container">
+    <h3>Register Here</h3>
+    <form (ngSubmit)="register()" #registerForm="ngForm">
+      <div class="form-group">
+        <label for="Email">Email address</label>
+        <input type="email" class="form-control" required id="Email" name="Email" [(ngModel)]="model.Email" #Email="ngModel" aria-describedby="emailHelp"
+          pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" placeholder="Enter email">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+      <div class="alert alert-danger" [hidden]="Email.valid || Email.untouched">
+        <div *ngIf="Email.errors && Email.errors.required">
+          Email is required
+        </div>
+        <div *ngIf="Email.errors && Email.errors.pattern">
+          Email is invalid
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="Password">Password</label>
+        <input type="password" class="form-control" required id="Password" name="Password" [(ngModel)]="model.Password" #Password="ngModel"
+          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}" placeholder="Password">
+      </div>
+      <div *ngIf="Password.invalid && (Password.dirty || Password.touched)" class="alert alert-danger">
+        <!--<div *ngIf="password.errors.minlength">
+          Password must be at least 4 characters long.
+        </div>-->
+        <div *ngIf="Password.errors && Password.errors.pattern || Password.errors.required">
+          Password rules mismatched
+          <ul>
+            <li>Password minimum eight and maximum 10 characters.</li>
+            <li>Pasword has at least one uppercase letter.</li>
+            <li>Pasword has one lowercase letter.</li>
+            <li>Pasword has one number.</li>
+            <li>Pasword has at one special character.</li>
+          </ul>
+
+        </div>
+      </div>
+
+
+
+      <div class="form-group">
+        <label for="Password">Confirm Password</label>
+        <input type="password" class="form-control" required id="ConfirmPassword" name="ConfirmPassword" [(ngModel)]="model.ConfirmPassword"
+          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}" #ConfirmPassword="ngModel" placeholder="Confirm Password">
+      </div>
+      <div [hidden]="model.Password == model.ConfirmPassword" class="alert alert-danger">Passwords do not match!</div>
+
+
+      <div class="form-group">
+        <label for="Name">Name</label>
+        <input type="text" class="form-control" required id="Name" name="FullName" [(ngModel)]="model.FullName" #FullName="ngModel"
+          placeholder="Full Name">
+      </div>
+      <div *ngIf="FullName.invalid && (FullName.dirty || FullName.touched)" class="alert alert-danger">
+        <div *ngIf="FullName.errors.required">
+          Full Name is required.
+        </div>
+        <div *ngIf="FullName.errors.minlength">
+          Full Name must be at least 4 characters long.
+        </div>
+        <div *ngIf="FullName.errors.forbiddenName">Linting Python 
+          Full Name cannot be Bob.
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="MobileNumber">Mobile Number</label>
+        <input type="text" class="form-control" maxlength="10" id="MobileNumber" name="MobileNumber" [(ngModel)]="model.MobileNumber"
+          #MobileNumber="ngModel" placeholder="Mobile Number">
+      </div>
+
+      <button type="submit" class="btn btn-success" [disabled]="!registerForm.form.valid">Register</button>
+      <button type="button" class="btn btn-default" (click)="newUser(); registerForm.reset()">Clear</button>
+    </form>
+  </div>
+</div>
+
+<h1> {{ message }} </h1>
